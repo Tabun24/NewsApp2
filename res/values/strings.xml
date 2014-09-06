@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NewsApp2</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="social">Общество </string>
+    <string name="questions">Вопрос-ответ  </string>
+    <string name="vybor">Выбор  </string>
+    <string name="press_centr">Пресса</string>
+    <string name="health">Здоровье </string>
+    <string name="timefree">Свободное время</string>
+    
+    <string name="draw_title">АиФ в Беларуси</string>
+    <string name="news_title">Новости</string>
+    <string name="number_title">Свежий номер</string>
+    
+    <string name="close">close</string>
+    <string name="open">open</string>
+    
+    <string name="toshare">Share</string>
+    <string name="toShare_message_number">Вы успешно поделились статьёй</string>
+    <string name="toShare_message_news">Вы успешно поделились  новостью </string>
+    
+    <string name="news">Новасти</string>
+        <string-array name="mTitles">
+            <item>Новости</item>
+			<item>Свежий номер</item>
+
+		</string-array>
+
+
+   <string name="refresh">Обновить</string>
+
+</resources>

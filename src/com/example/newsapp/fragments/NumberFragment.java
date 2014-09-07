@@ -8,6 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.newsapp.R;
 import com.example.newsapp.activities.DetailsActivity;
@@ -112,10 +116,18 @@ public class NumberFragment extends  Fragment {
 			}
 		});   
 		
-		 DownloadNewsTask task = new DownloadNewsTask();
-		 task.execute(urlListOfNumbers);
-	
+		 	ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);	 
+			 NetworkInfo netInfo = cm.getActiveNetworkInfo();
+			 if(netInfo!=null){
+			 DownloadNewsTask task = new DownloadNewsTask();
+			 task.execute(urlListOfNumbers);
+			 } else Toast.makeText(getActivity(),"No Internet access", Toast.LENGTH_SHORT).show();
+		 
 		 }else ((ViewGroup) activity._rootView1.getParent()).removeView(activity._rootView1);
+		 
+		 
+		 
+		 
 		return activity._rootView1;
 	}
 	

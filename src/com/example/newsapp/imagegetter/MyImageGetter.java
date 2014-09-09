@@ -10,6 +10,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.widget.TextView;
@@ -17,17 +19,23 @@ import android.widget.TextView;
 public class MyImageGetter implements Html.ImageGetter{
 	Context context;
 	TextView tv;
+	ConnectivityManager cm;
 
 	public MyImageGetter(Context context, TextView tv){
 		this.context = context;
 		this.tv= tv;
+		cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);	 
+		 
+		 
 	}
 	
 	@Override
 	public Drawable getDrawable(String source) {
 		UrlDrawable d = new UrlDrawable();
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if(netInfo!=null){
 		ImageGetterAsyncTask task = new ImageGetterAsyncTask(d);
-		task.execute(source);
+		task.execute(source);}
 		return d;
 	}
 	
@@ -51,7 +59,7 @@ public class MyImageGetter implements Html.ImageGetter{
 				
 				HttpResponse response = httpClient.execute(request);
 				drawable = Drawable.createFromStream(response.getEntity().getContent(), "src");
-				drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+				drawable.setBounds(10, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 				
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.example.newsapp.activities;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.newsapp.R;
+import com.example.newsapp.adapters.CursorFragmentPagerAdapter;
 import com.example.newsapp.fragments.DetailsFragment;
 import com.example.newsapp.fragments.PagerFragment;
 import com.example.newsapp.fragments.TitlesFragment;
@@ -36,8 +39,9 @@ public class DetailsActivity extends ActionBarActivity {
 		if(bundle.getInt(TAG_FRAGMENT)==1){
 			setContentView(R.layout.pagerlayout);
 			pager = (ViewPager) findViewById(R.id.pager);
-			pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-			pager.setAdapter(pagerAdapter);
+			
+			myFragmentPagerAdapter pageradapter = new myFragmentPagerAdapter(this, getSupportFragmentManager(), getContentResolver().query(News.CONTENT_URI, null,null, null, null));
+			pager.setAdapter(pageradapter);
 			
 			pager.setCurrentItem(getIntent().getBundleExtra("myBundle").getInt(TitlesFragment.POSITION),true);
 		} else{
@@ -79,26 +83,21 @@ public class DetailsActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class MyFragmentPagerAdapter extends FragmentStatePagerAdapter{
+	
+	private class myFragmentPagerAdapter extends CursorFragmentPagerAdapter{
 
-		public MyFragmentPagerAdapter(FragmentManager fm) {
-			super(fm);
+		public myFragmentPagerAdapter(Context context, FragmentManager fm,
+				Cursor cursor) {
+			super(context, fm, cursor);
+			// TODO Auto-generated constructor stub
 		}
 
 		@Override
-		public Fragment getItem(int position) {
+		public Fragment getItem(Context context, Cursor cursor) {
 			Bundle bundle = new Bundle();
-			bundle.putInt(TitlesFragment.POSITION, position);
+			bundle.putInt(TitlesFragment.POSITION, cursor.getPosition());
 			return PagerFragment.newInstance(bundle);
 		}
-
-		
-		@Override
-		public int getCount() {
-			//this.notifyDataSetChanged();
-			return getContentResolver().query(News.CONTENT_URI, null, null, null, null).getCount();
-		}
-		
 		
 	}
 	

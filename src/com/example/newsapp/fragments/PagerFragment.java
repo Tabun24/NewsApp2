@@ -1,15 +1,11 @@
 package com.example.newsapp.fragments;
 
-import org.json.JSONException;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -60,6 +56,7 @@ public class PagerFragment extends Fragment {
 				super.onCreate(savedInstanceState);
 				cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 				cr = getActivity().getContentResolver();
+				Log.d("myLogs","onCreate "+ getArguments().getInt(TitlesFragment.POSITION));
 			}
 			
 			public static PagerFragment newInstance(Bundle myBundle) {
@@ -163,6 +160,7 @@ public class PagerFragment extends Fragment {
 		  @Override
 			public void onDestroy() {
 				super.onDestroy();
+				Log.d("myLogs","onDestroy "+ getArguments().getInt(TitlesFragment.POSITION));
 				if(task!=null) task.cancel(true);
 				task = null;
 			}

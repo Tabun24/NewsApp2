@@ -1,11 +1,9 @@
 package com.example.newsapp.activities;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -40,7 +38,9 @@ public class DetailsActivity extends ActionBarActivity {
 			setContentView(R.layout.pagerlayout);
 			pager = (ViewPager) findViewById(R.id.pager);
 			
-			myFragmentPagerAdapter pageradapter = new myFragmentPagerAdapter(this, getSupportFragmentManager(), getContentResolver().query(News.CONTENT_URI, null,null, null, null));
+			myFragmentPagerAdapter pageradapter = new myFragmentPagerAdapter(getSupportFragmentManager(), getContentResolver().query(News.CONTENT_URI, null,null, null, null));
+		
+		//	CursorFragmentStagePagerAdapter  pageradapter = new CursorFragmentStagePagerAdapter(getSupportFragmentManager(), getContentResolver().query(News.CONTENT_URI, null,null, null, null));
 			pager.setAdapter(pageradapter);
 			
 			pager.setCurrentItem(getIntent().getBundleExtra("myBundle").getInt(TitlesFragment.POSITION),true);
@@ -86,22 +86,19 @@ public class DetailsActivity extends ActionBarActivity {
 	
 	private class myFragmentPagerAdapter extends CursorFragmentPagerAdapter{
 
-		public myFragmentPagerAdapter(Context context, FragmentManager fm,
+		public myFragmentPagerAdapter(FragmentManager fm,
 				Cursor cursor) {
-			super(context, fm, cursor);
-			// TODO Auto-generated constructor stub
+			super(fm, cursor);
 		}
 
 		@Override
-		public Fragment getItem(Context context, Cursor cursor) {
+		public Fragment getItem(Cursor cursor) {
 			Bundle bundle = new Bundle();
 			bundle.putInt(TitlesFragment.POSITION, cursor.getPosition());
 			return PagerFragment.newInstance(bundle);
 		}
 		
 	}
-	
-	
 	
 }
 

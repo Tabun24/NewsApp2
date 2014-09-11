@@ -158,6 +158,7 @@ public class TitlesFragment extends Fragment {
 					if(firstVisibleItem == countLoader-visibleItemCount && taskIsRunning){
 					taskIsRunning= false;
 					task.execute(url+(int)(cursor.getCount()/15)+1);
+					//Log.d("myLogs","url"+((int)(cursor.getCount()/15)+1));
 					}
 			    }
 					    

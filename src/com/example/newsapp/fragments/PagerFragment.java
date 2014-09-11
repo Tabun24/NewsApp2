@@ -56,7 +56,6 @@ public class PagerFragment extends Fragment {
 				super.onCreate(savedInstanceState);
 				cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 				cr = getActivity().getContentResolver();
-				Log.d("myLogs","onCreate "+ getArguments().getInt(TitlesFragment.POSITION));
 			}
 			
 			public static PagerFragment newInstance(Bundle myBundle) {
@@ -74,7 +73,7 @@ public class PagerFragment extends Fragment {
 			@Override
 			public View onCreateView(LayoutInflater inflater,
 					@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-				Log.d("myLogs" , "onCreateView");
+			
 			    View v = inflater.inflate(R.layout.details, container, false);
 			  
 			    imageLoadear.init(ImageLoaderConfiguration.createDefault(getActivity())); 
@@ -131,7 +130,6 @@ public class PagerFragment extends Fragment {
 						ContentValues cv = new ContentValues();
 						cv.put(NewsFull._ID,( getBundle().getInt(TitlesFragment.POSITION)+1));
 						cv.put(NewsFull.FULL, httpLoader.getJSON(urls[0]).getString("full"));
-						Log.d("myLogs",  " doInBackground(String... urls)");
 						cr.insert(NewsFull.FULL_CONTENT_URI, cv);
 						
 					} catch (Exception e) {
@@ -143,8 +141,7 @@ public class PagerFragment extends Fragment {
 			    protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
 			    	try{
-			    	Log.d("myLogs","positon onPostExecute = " + getBundle().getInt(TitlesFragment.POSITION));
-			    	onPostHelp();
+			    		onPostHelp();
 			    	if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
 						((MainActivity) activity).itemShowMain.setVisible(true);	
 					} else 
@@ -160,7 +157,7 @@ public class PagerFragment extends Fragment {
 		  @Override
 			public void onDestroy() {
 				super.onDestroy();
-				Log.d("myLogs","onDestroy "+ getArguments().getInt(TitlesFragment.POSITION));
+			
 				if(task!=null) task.cancel(true);
 				task = null;
 			}
@@ -173,7 +170,7 @@ public class PagerFragment extends Fragment {
 		if(cursor != null){
 		if(cursor.moveToFirst()){
 		
-	    Log.d("myLogs","-------------------------------------- ");
+	 
 	    Spanned sp = Html.fromHtml(cursor.getString(cursor.getColumnIndex(NewsFull.FULL)),new MyImageGetter(getActivity(), tvFull),null);
 	  // 	Spanned sp = Html.fromHtml(cursor.getString(cursor.getColumnIndex(NewsFull.FULL)));
 	    tvFull.setText(sp);
